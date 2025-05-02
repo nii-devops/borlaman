@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+  <!--div class="container-fluid vh-100"-->
+    <div style="min-height: 100vh;" class="row h-100 justify-content-center align-items-center mb-5">
+      <!-- Image column -->
+      <div class="col-lg-6 col-md-8 col-sm-10 text-center ">
+        <img
+          src="{{ url_for('static', filename='images/borlaman.jpg') }}"
+          alt="BorlaMan"
+          class="img-fluid"
+          style="max-width: 600px;"
+        >
+      </div>
+
+      <!-- Text & buttons column -->
+      <div class="col-lg-6 col-md-8 col-sm-10 text-center">
+        <div class="home-text">
+          <h1 class="display-5 fw-bold mb-4">Welcome to BorlaMan</h1>
+          <p style="font-size: x-large;" class="lead mb-5">
+            Connecting clients needing refuse collection with drivers ready to help.
+          </p>
+        </div>
+
+        <div class="d-grid gap-2 d-sm-flex justify-content-center">
+          {% if current_user.is_anonymous %}
+            <a href="{{ url_for('main.login') }}"
+               class="btn home-btn btn-lg rounded-pill px-4">
+              Get Started
+            </a>
+
+          {% elif current_user.is_admin == True %}
+              <a href="{{ url_for('main.admin') }}"
+                class="btn home-btn btn-lg rounded-pill px-4">
+                Go to Dashboard
+              </a>
+          {% elif current_user.role_id == 2 %}
+              <a href="{{ url_for('main.dashboard_client') }}"
+                class="btn home-btn btn-lg rounded-pill px-4">
+                Go to Dashboard
+              </a>
+             
+          {% else %}
+            <a href="{{ url_for('main.dashboard_driver') }}"
+            class="btn home-btn btn-lg rounded-pill px-4">
+            Go to Dashboard
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  <!--/div-->
+{% endblock %}

@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.env
+
+# FOLDERS
+migrations/
+instance/
+
+# Files
+test.py
+design_ideas.docx
+db_commands.txt
+git_commands.txt
+

@@ -1,0 +1,10 @@
+Flask>=2.0
+Flask-SQLAlchemy>=3.0
+Flask-Migrate>=4.0
+Flask-WTF>=1.0
+Flask-Login>=0.6
+Flask-Bootstrap>=1.0.2  # Or Bootstrap-Flask
+psycopg2-binary>=2.9    # PostgreSQL driver
+python-dotenv>=0.20
+email-validator>=1.1   # Required by Flask-WTF for email validation
+Werkzeug>=2.0          # Ensure compatibility

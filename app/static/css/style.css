@@ -1,0 +1,98 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333333;
+    background-color: #fdfdfd; /* light gray */
+    margin: 0; 
+    padding: 0;
+    min-height: 100vh;
+}
+  
+/* Sticky header */
+.site-header {
+    background-color: #1a4406; /* medium green */
+    padding: 0.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    background-color: #1a4406; /* medium green */
+    padding: 0.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.home-btn {
+    background-color: #1a4406;
+    color: white;
+}
+  
+/* Navbar brand & links */
+.navbar-brand {
+    font-size: 1.5rem;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.nav-link {
+    color: #fff !important;
+}
+ 
+.nav-btn {
+    background: white;
+    color: #1a4406;
+}
+
+.nav-btn:hover {
+    background: orangered;
+    color: #1a4406;
+    transform: scale(1.1);
+}
+
+.home-text {
+    color: #1a4406; 
+}
+
+.heading-text {
+    color: #1a4406;
+    font-weight: 600;
+}
+
+
+.google-btn {
+    background-color: rgba(236, 202, 174, 0.514);
+    color: rgb(50, 115, 212);
+}
+
+.google-btn:hover {
+    background-color: rgba(185, 227, 247, 0.514);
+    color: rgb(50, 115, 212);
+}
+
+
+  
+/* Footer */
+.site-footer {
+    background-color: #1a4406;;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+.auth-form {
+    padding: 25px 50px;
+    width: 400px;
+}
+
+
+
+
+
+  

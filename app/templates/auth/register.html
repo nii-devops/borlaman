@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+
+<div class="d-flex flex-column justify-content-center align-items-center min-vh-100 px-4 py-5">
+    <div class="auth-form col-md-4 col-sm-10 shadow-lg">
+        <div class="text-center">
+            <h3 class="heading-text">{{ heading }}</h3>
+        </div>
+        <hr>
+        <div class="form-group pb-3">
+            {{ render_form(form) }}
+        </div>
+        <hr>
+        <p class="text-center">Already have an account? <a href="{{ url_for('main.login') }}">Click to Login!</a></p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+
+{% block styles %}
+    <style>
+        
+        .sidebar {
+            height: 100vh;
+            background-color: #343a40;
+            color: white;
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255,255,255,.5);
+        }
+        
+        .sidebar .nav-link:hover {
+            color: rgba(255,255,255,.75);
+        }
+        
+        .sidebar .nav-link.active {
+            color: #fff;
+            background-color: #007bff;
+        }
+        
+        .main-content {
+            padding: 20px;
+            padding-bottom: 10px;
+        }
+        
+        .content-page {
+            display: none;
+        }
+        
+        .content-page.active {
+            display: block;
+        }
+    </style>
+{% endblock styles %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar p-0">
+                <div class="p-3">
+                    <h3>Admin Panel</h3>
+                    <hr>
+                    <nav class="nav flex-column">
+                        <a class="nav-link active" href="#" data-target="dashboard">
+                            <i class="bi bi-speedometer2 me-2"></i>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="#" data-target="users">
+                            <i class="bi bi-people me-2"></i>
+                            Users
+                        </a>
+                        <a class="nav-link" href="#" data-target="products">
+                            <i class="bi bi-box-seam me-2"></i>
+                            Products
+                        </a>
+                        <a class="nav-link" href="#" data-target="settings">
+                            <i class="bi bi-gear me-2"></i>
+                            Settings
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+
+
+            <!-- Main Content -->
+            <div class="col-md-9 col-lg-10 ms-auto main-content">
+                <!-- Dashboard Content -->
+                <div class="content-page active" id="dashboard">
+                    
+                    <h2 class="text-center">Dashboard</h2>
+                    <hr style="height: 5px; margin-left: 35%; margin-right: 35%; background: #343a40;" class="">
+                    <div class="d-flex justify-content-center py-2">
+                        <a class="btn btn-md rounded-pill mx-2" href="{{ url_for('main.create_roles') }}">Create Roles</a>
+                        <a class="btn btn-md rounded-pill mx-2" href="{{ url_for('main.create_statuses') }}">Create Status</a>
+                    </div>
+                    <hr>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Welcome to Admin Panel</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>
+
+                    <h4 class="text-center py-3">Jobs</h4>
+                    <hr>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Job Description</th>
+                                <th>Location</th>
+                                <th>Price</th>
+                                <th>Posted On</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for job in jobs %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{job.description}}</td>
+                                <td>{{job.location_text}}</td>
+                                <td>{{job.price}}</td>
+                                <td>{{job.created_at}}</td>
+                                <td>{{job.status}}</td>
+                                <td class="d-flex gap-1">
+                                    <button class="btn btn-actions btn-sm btn-outline-warning">Edit</button>
+                                    <button class="btn btn-actions btn-sm btn-outline-danger">Delete</button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <!-- Users Content -->
+                <div class="content-page" id="users">
+                    <h2>User Management</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>John Doe</td>
+                                <td>john@example.com</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Edit</button>
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Products Content -->
+                <div class="content-page" id="products">
+                    <h2>Product Management</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Product 1</h5>
+                                    <p class="card-text">Product description and details.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add more product cards -->
+                    </div>
+                </div>
+
+                <!-- Settings Content -->
+                <div class="content-page" id="settings">
+                    <h2>Settings</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label class="form-label">Site Title</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Theme Color</label>
+                                    <input type="color" class="form-control form-control-color">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Activate the first menu item by default
+            document.querySelector('.sidebar .nav-link').classList.add('active');
+            
+            // Add click event listeners to all menu items
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and content pages
+                    document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
+                    document.querySelectorAll('.content-page').forEach(page => page.classList.remove('active'));
+                    
+                    // Add active class to clicked link and corresponding content page
+                    this.classList.add('active');
+                    const target = this.getAttribute('data-target');
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+        });
+    </script>
+{% endblock %}

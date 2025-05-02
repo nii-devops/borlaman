@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h3 class="text-center mb-4">Job Details #{{ job.id }}</h3>
+
+  <div style="width: 700px; margin: 0 auto;" class="card">
+    <div class="card-header text-center">
+      Status:
+      <span class="badge bg-{{ 
+         'secondary' if job.status == 'posted' 
+         else ('warning' if job.status == 'accepted' else 'success') 
+      }}">
+        {{ job.status|capitalize }}
+      </span>
+    </div>
+
+    <div class="card-body row justify-content-center align-items-start">
+      <!-- Image column, centered -->
+      <div style="width: 150px; height: 200px;" class="col-md-6 col-sm-12 d-flex justify-content-center mb-3">
+        <img class="img-fluid rounded" src="{{ image_url }}" alt="job-image">
+      </div>
+
+      <!-- Details column, center text -->
+      <div class="col-md-6 col-sm-12 text-center">
+        <h5 class="card-title">Location: {{ job.location_text }}</h5>
+        <p class="card-text"><strong>Description:</strong><br>{{ job.description }}</p>
+        <p><strong>Price Offered:</strong>
+          {{ "${:,.2f}".format(job.price) if job.price else 'N/A' }}
+        </p>
+        <p>
+          <strong>Posted By:</strong>
+          {{ job.client.first_name }} {{ job.client.last_name }}
+          on {{ job.created_at.strftime('%Y-%m-%d %H:%M') }}
+        </p>
+        {% if job.driver %}
+          <p>
+            <strong>Accepted By:</strong>
+            {{ job.driver.first_name }} {{ job.driver.last_name }}
+            on {{ job.accepted_at.strftime('%Y-%m-%d %H:%M') if job.accepted_at else '-' }}
+          </p>
+        {% endif %}
+
+        {# Action button, also centered #}
+        {% if current_user.role == 'driver' and job.status == 'posted' and not job.driver_id %}
+          <form action="{{ url_for('main.accept_job', job_id=job.id) }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <button type="submit" class="btn btn-primary mt-2">Accept Job</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card-footer text-center">
+      <a
+        href="{{ url_for('main.dashboard_client') if current_user.role == 'client' 
+                     else url_for('main.dashboard_driver') }}"
+        class="btn btn-secondary"
+      >
+        Back to Dashboard
+      </a>
+    </div>
+  </div>
+{% endblock %}

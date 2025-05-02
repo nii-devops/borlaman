@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <style>
+        body {
+        min-height: 100vh;
+        overflow: hidden;
+        }
+        #sidebar {
+        min-width: 200px;
+        max-width: 200px;
+        background-color: #343a40;
+        color: #fff;
+        }
+        #sidebar .nav-link {
+        color: #adb5bd;
+        }
+        #sidebar .nav-link.active {
+        background-color: #495057;
+        color: #fff;
+        }
+        #main-content {
+        overflow-y: auto;
+        }
+    </style>
+{% endblock styles %}
+
+
+{% block content %}
+
+<div style="min-height: 100vh;" class="row">
+    <div style="min-height: 100vh;" class="col-md-2">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="d-flex flex-column p-3">
+        <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <span class="fs-4">Admin Panel</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column" id="admin-tabs" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active" id="tab-dashboard" data-bs-toggle="pill" data-bs-target="#pane-dashboard" type="button" role="tab">
+            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="tab-users" data-bs-toggle="pill" data-bs-target="#pane-users" type="button" role="tab">
+            <i class="bi bi-people-fill me-2"></i> Users
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="tab-settings" data-bs-toggle="pill" data-bs-target="#pane-settings" type="button" role="tab">
+            <i class="bi bi-gear-fill me-2"></i> Settings
+            </button>
+        </li>
+        <li class="nav-item mt-auto">
+            <button class="nav-link text-danger" id="tab-logout">
+            <i class="bi bi-box-arrow-right me-2"></i> Logout
+            </button>
+        </li>
+        </ul>
+    </nav>
+    </div>
+  
+<!-- Main content -->
+<div id="main-content" class="flex-fill p-4 col-md-10">
+    <div class="tab-content h-100" id="admin-tabs-content">
+      <!-- Dashboard Pane -->
+      <div class="tab-pane fade show active h-100" id="pane-dashboard" role="tabpanel">
+        <h2>Dashboard</h2>
+        <p>Overview of the system metrics and notifications.</p>
+        <!-- add your dashboard widgets here -->
+      </div>
+
+      <!-- Users Pane -->
+      <div class="tab-pane fade h-100" id="pane-users" role="tabpanel">
+        <h2>Users</h2>
+        <p>Manage user accounts, roles, and permissions.</p>
+        <!-- example table -->
+        <table class="table table-striped mt-3">
+          <thead>
+            <tr><th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>1</th>
+              <td>Alice Smith</td>
+              <td>alice@example.com</td>
+              <td>Admin</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary">Edit</button>
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+              </td>
+            </tr>
+            <!-- more rows… -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Settings Pane -->
+      <div class="tab-pane fade h-100" id="pane-settings" role="tabpanel">
+        <h2>Settings</h2>
+        <p>Update application settings and preferences.</p>
+        <form class="mt-3">
+          <div class="mb-3 row">
+            <label class="col-sm-3 col-form-label">Site Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" placeholder="My Application">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label class="col-sm-3 col-form-label">Timezone</label>
+            <div class="col-sm-9">
+              <select class="form-select">
+                <option>UTC</option>
+                <option>GMT</option>
+                <option>EST</option>
+                <!-- more… -->
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Save Settings</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+{% endblock content %}

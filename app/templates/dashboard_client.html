@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid py-5 px-5 vh-100 text-center justify-content-center">
+
+    <h1>Client Dashboard</h1>
+    <p>Welcome, {{ current_user.first_name }}!</p>
+
+    <a href="{{ url_for('main.post_job') }}" class="btn btn-success mb-3">Post a New Job</a>
+
+    <hr class="py-3">
+
+    <h2>Your Posted Jobs</h2>
+    {% if jobs %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Price</th>
+                    <th>Posted On</th>
+                    <th>Accepted By</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for job in jobs %}
+                <tr>
+                    <td>{{ job.id }}</td>
+                    <td>{{ job.description[:50] }}{% if job.description|length > 50 %}...{% endif %}</td>
+                    <td>{{ job.location_text }}</td>
+                    <td><span class="badge bg-{{ 'secondary' if job.status == 'posted' else ('warning' if job.status == 'accepted' else 'success') }}">{{ job.status|capitalize }}</span></td>
+                    <td>{{ "${:,.2f}".format(job.price) if job.price else 'N/A' }}</td>
+                    <td>{{ job.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        {% if job.driver %}
+                            {{ job.driver.first_name }} {{ job.driver.last_name }} ({{ job.accepted_at.strftime('%Y-%m-%d %H:%M') if job.accepted_at }})
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                     <td>
+                        <a href="{{ url_for('main.view_job', job_id=job.id) }}" class="btn btn-sm btn-info">Details</a>
+                         <!-- Add edit/cancel buttons later -->
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You haven't posted any jobs yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

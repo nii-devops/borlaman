@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Driver Dashboard</h1>
+    <p>Welcome, {{ current_user.first_name }}!</p>
+
+    <h2>Available Jobs</h2>
+    {% if available_jobs %}
+        <table class="table table-hover">
+             <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Price</th>
+                    <th>Posted On</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+             <tbody>
+            {% for job in available_jobs %}
+                <tr>
+                    <td>{{ job.id }}</td>
+                    <td>{{ job.description[:50] }}{% if job.description|length > 50 %}...{% endif %}</td>
+                    <td>{{ job.location_text }}</td>
+                    <td>{{ "${:,.2f}".format(job.price) if job.price else 'N/A' }}</td>
+                    <td>{{ job.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>
+                        <form action="{{ url_for('main.accept_job', job_id=job.id) }}" method="POST" style="display: inline;">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> <!-- Important for CSRF protection -->
+                            <button type="submit" class="btn btn-sm btn-primary">Accept Job</button>
+                        </form>
+                         <a href="{{ url_for('main.view_job', job_id=job.id) }}" class="btn btn-sm btn-info ms-1">Details</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No jobs currently available.</p>
+    {% endif %}
+
+    <hr>
+
+     <h2>Your Accepted Jobs</h2>
+    {% if accepted_jobs %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Client</th>
+                    <th>Accepted On</th>
+                    <th>Status</th>
+                     <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for job in accepted_jobs %}
+                 <tr>
+                    <td>{{ job.id }}</td>
+                    <td>{{ job.description[:50] }}{% if job.description|length > 50 %}...{% endif %}</td>
+                    <td>{{ job.location_text }}</td>
+                    <td>{{ job.client.first_name }} {{ job.client.last_name }}</td>
+                    <td>{{ job.accepted_at.strftime('%Y-%m-%d %H:%M') if job.accepted_at else '-' }}</td>
+                     <td><span class="badge bg-warning">{{ job.status|capitalize }}</span></td>
+                     <td>
+                         <a href="{{ url_for('main.view_job', job_id=job.id) }}" class="btn btn-sm btn-info">Details</a>
+                         <!-- Add 'Mark Complete' button later -->
+                     </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You haven't accepted any jobs yet.</p>
+    {% endif %}
+
+{% endblock %}

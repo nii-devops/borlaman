@@ -1,0 +1,69 @@
+<!-- ========== HEADER ========== -->
+<header class="site-header">
+  <nav class="navbar container overflow-visible">  <!-- allow children to overflow -->
+    <a class="navbar-brand text-white" href="{{ url_for('main.home') }}">
+      BorlaMan
+    </a>
+
+    <div class="d-flex align-items-center">
+      <ul class="navbar-nav me-3 d-flex flex-row">
+        <li class="nav-item px-2">
+          <a class="nav-link text-white" href="{{ url_for('main.home') }}">Home</a>
+        </li>
+        {% if current_user.is_authenticated %}
+          {% if current_user.role == 'client' %}
+            <li class="nav-item px-2">
+              <a class="nav-link text-white" href="{{ url_for('main.dashboard_client') }}">
+                Dashboard
+              </a>
+            </li>
+          {% elif current_user.role == 'driver' %}
+            <li class="nav-item px-2">
+              <a class="nav-link text-white" href="{{ url_for('main.dashboard_driver') }}">
+                Dashboard
+              </a>
+            </li>
+          {% endif %}
+        {% endif %}
+
+        <!-- Dropdown: add position-relative here -->
+        <li class="nav-item dropdown">
+          <a 
+            class="nav-link dropdown-toggle text-white" 
+            href="#" 
+            id="adminDropdown" 
+            role="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+          >
+            Admin
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.admin') }}">Admin Panel</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ url_for('main.create_users') }}">Create Users</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Settings</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div>
+        {% if current_user.is_anonymous %}
+          <a href="{{ url_for('main.login') }}" class="btn nav-btn btn-sm me-2">Login</a>
+        {% else %}
+          <span class="navbar-text text-white me-3">
+            Hello, {{ current_user.first_name }}
+          </span>
+          <a href="{{ url_for('main.logout') }}" class="btn nav-btn btn-sm">
+            Logout
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</header>
